@@ -6,5 +6,7 @@ public class MainServer {
         Server server = new Server(3000);
 
         server.attendi();
+        server.leggi();
+        server.scrivi();
     }
 }

@@ -1,6 +1,8 @@
 package MC_Client;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Client {
@@ -32,4 +34,26 @@ public class Client {
         }
         return 1;
     }
+
+    public void scrivi(){
+
+        try {
+            OutputStream outputStream = socket.getOutputStream();
+            PrintWriter printWriter = new PrintWriter(outputStream);
+
+            printWriter.print("Ciao");
+
+            printWriter.flush();
+
+            //CHIUDERE LO STREAM
+
+        } catch (IOException e) {
+            //
+        }
+
+    }
+
+    public void leggi(){}
+
+    public void chiudi(){}
 }

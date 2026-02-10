@@ -7,5 +7,6 @@ public class MainClient {
 
         Client client = new Client("Maikol");
         client.connetti("localhost", 3000);
+        client.scrivi();
     }
 }

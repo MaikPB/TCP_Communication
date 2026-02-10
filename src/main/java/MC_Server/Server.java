@@ -1,6 +1,6 @@
 package MC_Server;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -21,7 +21,7 @@ public class Server {
 
         //}
         catch (IOException e) {
-            System.err.println("...");
+            System.err.println("Il server non resce ad aprire la porta ed a completare la fase d'ascolto");
         }
     }
 
@@ -38,6 +38,28 @@ public class Server {
             return clientSocket;
         }
     }
+
+
+    public void scrivi(){
+
+    }
+
+    public void leggi(){
+
+
+        try {
+
+            InputStream inputStream = clientSocket.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+            String testo = br.readLine();
+            System.out.println("CLIENT: " + testo);
+
+        } catch (IOException e) {
+            //
+        }
+
+    }
+
 
 
     public void chiudi(){
