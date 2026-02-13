@@ -31,7 +31,7 @@ public class Server {
             clientSocket = serverSocket.accept();
             System.out.println("Il client ha accettato la richiesta");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
         finally{
@@ -77,7 +77,7 @@ public class Server {
             System.out.println("Connessione Server chiusa");
             serverSocket.close();
         } catch (IOException e) {
-            //
+            e.printStackTrace();
         }
     }
 

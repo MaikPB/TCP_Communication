@@ -27,6 +27,7 @@ public class Client {
             System.out.println("Client " + nome + ": connessione effettuata");
             return 1;
         } catch (IOException e) {
+            System.out.println("Client " + nome + ": connessione non effettuata");
             e.printStackTrace();
             return 0;
         }
