@@ -7,10 +7,12 @@ public class MainServer {
 
         server.attendi();
 
-        
-        server.leggi();
-        server.scrivi();
+        while (i != "esci") {
 
+            server.leggi();
+            server.scrivi();
+
+        }
 
         server.termina();
 
