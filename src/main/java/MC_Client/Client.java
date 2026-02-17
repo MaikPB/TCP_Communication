@@ -39,6 +39,7 @@ public class Client {
             OutputStream outputStream = socket.getOutputStream();
             PrintWriter printWriter = new PrintWriter(outputStream, true);
 
+
             printWriter.println("Ciao dal client " + nome);
 
         } catch (IOException e) {

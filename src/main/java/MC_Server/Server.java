@@ -10,6 +10,7 @@ public class Server {
     private Socket clientSocket;
     private int porta;
 
+
     public Server(int porta) {
         this.porta = porta;
 
@@ -30,6 +31,7 @@ public class Server {
         try {
             clientSocket = serverSocket.accept();
             System.out.println("Il client ha accettato la richiesta");
+            System.out.println("Per uscire scrivere 'esci'");
         } catch (IOException e) {
             e.printStackTrace();
         }
