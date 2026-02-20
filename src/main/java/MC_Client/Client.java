@@ -6,66 +6,63 @@ import java.net.Socket;
 public class Client {
 
     private String nome;
-    private String colore;
-    private Socket socket;   // UNICA socket
+    private Socket socket;
 
-    // Costruttore base
     public Client(String nome) {
         this.nome = nome;
     }
 
-    // Costruttore con colore
-    public Client(String nome, String colore) {
-        this.nome = nome;
-        this.colore = colore;
-    }
-
-    // Connessione al server
-    public int connetti(String nomeServer, int portaServer) {
+    public int connetti(String server, int porta) {
         try {
-            socket = new Socket(nomeServer, portaServer);
-            System.out.println("Client " + nome + ": connessione effettuata");
+            socket = new Socket(server, porta);
+            System.out.println("Client connesso al server\n" + "Scrivere 'exit' per chiudere le connessioni");
             return 1;
         } catch (IOException e) {
-            System.out.println("Client " + nome + ": connessione non effettuata");
+            System.out.println("Errore connessione");
             e.printStackTrace();
             return 0;
         }
     }
 
-    // Scrive un messaggio al server
-    public void scrivi() {
+    public String scrivi() {
         try {
-            OutputStream outputStream = socket.getOutputStream();
-            PrintWriter printWriter = new PrintWriter(outputStream, true);
+            BufferedReader tastiera = new BufferedReader(
+                    new InputStreamReader(System.in));
 
+            PrintWriter out = new PrintWriter(
+                    socket.getOutputStream(), true);
 
-            printWriter.println("Ciao dal client " + nome);
+            System.out.print("CLIENT: ");
+            String messaggio = tastiera.readLine();
+
+            out.println(messaggio);
+            return messaggio;
 
         } catch (IOException e) {
             e.printStackTrace();
+            return "";
         }
     }
 
-    // Legge un messaggio dal server
-    public void leggi() {
+    public String leggi() {
         try {
-            InputStream inputStream = socket.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(socket.getInputStream()));
 
-            String testo = br.readLine();
-            System.out.println("SERVER: " + testo);
+            String messaggio = in.readLine();
+            System.out.println("SERVER: " + messaggio);
+            return messaggio;
 
         } catch (IOException e) {
             e.printStackTrace();
+            return "";
         }
     }
 
-    // Chiude la connessione
     public void chiudi() {
         try {
             socket.close();
-            System.out.println("Connessione Client chiusa");
+            System.out.println("Client chiuso");
         } catch (IOException e) {
             e.printStackTrace();
         }

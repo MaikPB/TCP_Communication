@@ -10,77 +10,68 @@ public class Server {
     private Socket clientSocket;
     private int porta;
 
-
     public Server(int porta) {
         this.porta = porta;
-
         try {
             serverSocket = new ServerSocket(porta);
-            System.out.println("Il server è in ascolto");
-        }
-        //catch{
-
-        //}
-        catch (IOException e) {
-            System.err.println("Il server non resce ad aprire la porta ed a completare la fase d'ascolto");
+            System.out.println("Server in ascolto sulla porta " + porta);
+        } catch (IOException e) {
+            System.out.println("Errore apertura server");
+            e.printStackTrace();
         }
     }
 
-
-    public Socket attendi(){
+    public void attendi() {
         try {
             clientSocket = serverSocket.accept();
-            System.out.println("Il client ha accettato la richiesta");
-            System.out.println("Per uscire scrivere 'esci'");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        finally{
-            return clientSocket;
-        }
-    }
-
-
-    public void scrivi() {
-        try {
-            OutputStream outputStream = clientSocket.getOutputStream();
-            PrintWriter printWriter = new PrintWriter(outputStream);
-
-            printWriter.println("Ciao");
-
-            printWriter.flush();
-
+            System.out.println("Client connesso\n" + "Scrivere 'exit' per chiudere le connessioni" );
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
-    public void leggi(){
-
-
+    public String leggi() {
         try {
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(clientSocket.getInputStream()));
 
-            InputStream inputStream = clientSocket.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-            String testo = br.readLine();
-            System.out.println("CLIENT: " + testo);
+            String messaggio = in.readLine();
+            System.out.println("CLIENT: " + messaggio);
+            return messaggio;
 
         } catch (IOException e) {
-            throw  new RuntimeException(e);
+            e.printStackTrace();
+            return "";
         }
-
     }
 
-
-    public void termina(){
+    public String scrivi() {
         try {
-            System.out.println("Connessione Server chiusa");
+            BufferedReader tastiera = new BufferedReader(
+                    new InputStreamReader(System.in));
+
+            PrintWriter out = new PrintWriter(
+                    clientSocket.getOutputStream(), true);
+
+            System.out.print("SERVER: ");
+            String messaggio = tastiera.readLine();
+
+            out.println(messaggio);
+            return messaggio;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public void termina() {
+        try {
+            clientSocket.close();
             serverSocket.close();
+            System.out.println("Server chiuso");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }

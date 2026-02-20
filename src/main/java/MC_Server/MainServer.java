@@ -1,20 +1,23 @@
 package MC_Server;
 
-public class MainServer{
+public class MainServer {
+
     public static void main(String[] args) {
 
         Server server = new Server(3000);
-
         server.attendi();
 
-        //while (!messaggio.equals("esci")) {
+        String messaggio = "";
 
-            server.leggi();
-            server.scrivi();
+        while (!messaggio.equals("exit")) {
 
-        //}
+            messaggio = server.leggi();
+
+            if (!messaggio.equals("exit")) {
+                messaggio = server.scrivi();
+            }
+        }
 
         server.termina();
-
     }
 }
